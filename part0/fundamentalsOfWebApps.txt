@@ -1,0 +1,71 @@
+Exercises completed:
+
+0.1 html review
+0.2 css review
+0.3 html forms review
+
+
+0.4  create a diagram showing the request/response of this given scenario:
+     -user creates and submits a new note on the webpage with a list of notes
+
+     -Answer:
+
+     * browser > server: 
+          HTTP POST request https://studies.cs.helsinki.fi/exampleapp/new_note  (initial loaded js informs to POST to this url)
+     * server > browser:
+          responds with http status code 302 (url redirect) to tell the...
+     * browser > server:
+          browser to make a new HTTP GET server request (to the url address
+          defined in the header's Location inside the network tab of devtool)
+     * server > browser:
+          responds with a url
+     * browser > server:
+          the browser reloads the page, causing more http requests to the server (for .css, .js and .json files)
+     * browser:
+          browser fetches the css, js and json files and renders the page
+
+
+0.5  create a diagram showing the situation where the user goes to the spa version 
+
+     -Answer:
+
+     * browser > server:
+          HTTP GET request https://studies.cs.helsinki.fi/exampleapp/spa
+     * server > browser:
+          responds with html file
+     * browser > server:
+          HTTP GET request for main.css
+     * server > browser:
+          responds with main.css file
+     * browser > server:
+          HTTP request for spa.js
+     * server > browser:
+          responds with spa.js
+     * browser > server:
+          HTTP GET request for data.json
+     * server > browser:
+          responds with data.json
+     * browser > server:
+          requesting more files
+     * server > browser:
+          responds with more files
+     * browser renders content on webpage
+
+
+0.6  create a diagram showing the situation where the user creates a new
+     note on the spa version
+     -user creates and submits a new note on the webpage with a list of notes
+
+     -Answer:
+
+     * browser > server:
+         -HTTP POST request https://fullstack-exampleaap.herokuapp.com/new_note_spa  (initial loaded js informs to POST to this url)
+         -the submission form doesnt have attributes method and action and preventDefault() prevents form from default submitting the new note to the server
+     * server > browser:
+         -responds with status code 201 created (after receiving and saving to db the new .json file)
+         -doesnt send a redirect url to the browser
+     * browser:
+         -stays on the same page and new note is added to the webpage
+         -sends no further HTTP requests to the server
+         
+    
