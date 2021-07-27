@@ -1,3 +1,5 @@
+import Statistic from './Statistic';
+
 const Stats = (props) => {
   const all = props.good + props.neutral + props.bad;
   // average score is (good: 1, neutral: 0, bad: -1) divided by total
@@ -16,17 +18,26 @@ const Stats = (props) => {
     positivePercentage = 100;
   }
 
+  if (all === 0) {
+    return (
+      <>
+        <h2>statistics</h2>
+        <p>No feedback given</p>
+      </>
+    )
+  }
+
   return (
     <>
       <h2>statistics</h2>
       <ul>
-        <li>good <span>{props.good}</span></li>
-        <li>neutral <span>{props.neutral}</span></li>
-        <li>bad <span>{props.bad}</span></li>
+        <Statistic text='good' value={props.good} />
+        <Statistic text='neutral' value={props.neutral} />
+        <Statistic text='bad' value={props.bad} />
         {/* more stats based above calculations*/}
-        <li>all <span>{all}</span></li>
-        <li>average <span>{avg}</span></li>
-        <li>positive <span>{positivePercentage} &#37;</span></li>
+        <Statistic text='all' value={all} />
+        <Statistic text='avg' value={avg} />
+        <Statistic text='positive' value={positivePercentage} />
       </ul>
     </>
   );
