@@ -1,1 +1,4 @@
 notes.txt
+
+# dont gitignore notes files in individual projects
+!/part1/unicafe/notes.txt

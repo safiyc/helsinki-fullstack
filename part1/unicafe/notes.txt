@@ -1,0 +1,16 @@
+7.26 - 
+
+--Exercise 1.6--
+
+-2 components
+  -top component
+    -heading
+    -show 3 buttons (good, neutral, bad)
+  -bottom component
+    -heading
+    -show 3 items (good, neutral, bad) and counters
+
+  -buttons can separate into Button components
+
+-at page refresh, counters reset
+
