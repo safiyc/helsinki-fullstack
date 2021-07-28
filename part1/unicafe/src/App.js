@@ -10,8 +10,6 @@ const App = () => {
   const [bad, setBad] = useState(0);
 
   const handleClick = (e) => {
-    // console.log('e: ', e.target.textContent);
-
     switch (e.target.textContent) {
       case 'good':
         setGood(good + 1);

@@ -3,13 +3,13 @@ import Statistic from './Statistic';
 const Stats = (props) => {
   const all = props.good + props.neutral + props.bad;
   // average score is (good: 1, neutral: 0, bad: -1) divided by total
-  let avg = (props.good - props.bad) / all;
+  let average = (props.good - props.bad) / all;
   let positivePercentage = props.good / all;
 
-  if (isNaN(avg)) {
-    avg = 0;
-  } else if (avg === 1) {
-    avg = avg.toFixed(1);
+  if (isNaN(average)) {
+    average = 0;
+  } else if (average === 1) {
+    average = average.toFixed(1);
   }
 
   if (isNaN(positivePercentage)) {
@@ -30,15 +30,28 @@ const Stats = (props) => {
   return (
     <>
       <h2>statistics</h2>
-      <ul>
-        <Statistic text='good' value={props.good} />
-        <Statistic text='neutral' value={props.neutral} />
-        <Statistic text='bad' value={props.bad} />
-        {/* more stats based above calculations*/}
-        <Statistic text='all' value={all} />
-        <Statistic text='avg' value={avg} />
-        <Statistic text='positive' value={positivePercentage} />
-      </ul>
+      <table>
+        <tbody>
+          <tr>
+            <Statistic text='good' value={props.good} />
+          </tr>
+          <tr>
+            <Statistic text='neutral' value={props.neutral} />
+          </tr>
+          <tr>
+            <Statistic text='bad' value={props.bad} />
+          </tr>
+          <tr>
+            <Statistic text='all' value={all} />
+          </tr>
+          <tr>
+            <Statistic text='average' value={average} />
+          </tr>
+          <tr>
+            <Statistic text='positive' value={positivePercentage} />
+          </tr>
+        </tbody>
+      </table>
     </>
   );
 };
