@@ -3,7 +3,7 @@ import Button from './Button';
 const FeedbackOptions = (props) => {
   return (
     <>
-      <h2>give feeback</h2>
+      <h2>Give Feeback App</h2>
       {/* <button onClick={props.handleClick}>good</button>
       <button onClick={props.handleClick}>neutral</button>
       <button onClick={props.handleClick}>bad</button> */}
