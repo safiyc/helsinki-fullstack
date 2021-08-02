@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import Anecdotes from './Anecdotes';
 
+import Button from './Button';
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -21,18 +23,10 @@ const App = () => {
 
   // index of displayed anecdote
   const [selected, setSelected] = useState(0);
-  // points is arr of vals 0 for all els (length of anecdotes)
-  const [votesArray, setVotesArray] = useState([...points]);
-  // index of highest voted anecdote
-  const [highestVote, setHighestVote] = useState(0);
-
-  //#region test multiple variables in a state
-  // votesArray and highestVote states
   const [state, setState] = useState({
-    votesArray2: [...points],
-    highestVote2: 0
+    votesArray: [...points],
+    highestVote: 0
   });
-  //#endregion
 
   // click to render next random anecdote
   const handleClickAnecdotes = () => {
@@ -44,9 +38,10 @@ const App = () => {
     console.log('current anecdote: ', randomNum);
   }
 
-  //#region test handleClickVote
-  const handleClickVote2 = () => {
-    const votesCopy = [...state.votesArray2];
+  // click to vote on displayed anecdote
+  const handleClickVote = () => {
+    // cant directly work on votesArray, so copied
+    const votesCopy = [...state.votesArray];
     votesCopy[selected] += 1;
 
     // assign highest val
@@ -54,47 +49,26 @@ const App = () => {
     // assign index of highest val
     const indFirstHighest = votesCopy.findIndex(el => el === highest);
 
-    setState({ votesArray2: votesCopy, highestVote2: indFirstHighest });
-
-    // val is one val behind click
-    // console.log('votesArray: ', state.votesArray2);
+    setState({ votesArray: votesCopy, highestVote: indFirstHighest });
   }
 
-  // test
+  // console.log test
   const confirmVotesArray = () => {
-    console.log('votesArray: ', state.votesArray2);
+    console.log('votesArray: ', state.votesArray);
   }
-  //#endregion
-
-  // click to vote for current displayed anecdote
-  const handleClickVote = () => {
-    // must copy arr, then set
-    const votesCopy = [...votesArray];
-    // selected is index of rendered anecdote
-    votesCopy[selected] += 1;
-    setVotesArray(votesCopy);
-    // console.log('initial ', [...points]);
-    // console.log('current anecdote ', selected);
-    console.log('votes ', votesArray);  // val updated after next click
-    console.log('votes[#] ', votesArray[selected]);  // val updated after next click
-
-    displayHighestVote();
-  };
-
-  const displayHighestVote = () => {
-    // assigns highest val element
-    // if [0,1,2,2], will return 2
-    const highest = votesArray.reduce((a, b) => Math.max(a, b));
-
-    // index of first el with highest vote counts
-    setHighestVote(votesArray.findIndex(el => el === highest));
-
-    console.log('index of highest: ', highestVote);
-  };
 
   return (
     <div>
-      <Anecdotes handleClickRandom={handleClickAnecdotes} randomAnecdote={anecdotes[selected]} points={points} selected={selected} handleClickVote={handleClickVote2} votesArray={state.votesArray2} highestVoted={anecdotes[state.highestVote2]} confirmVotesArray={confirmVotesArray} />
+      <Anecdotes anecdote={anecdotes[selected]} heading='Anecdote App' />
+      <p>
+        has {state.votesArray[selected]} votes
+      </p>
+      <div>
+        <Button handleClick={handleClickVote} text='vote' />
+        <Button handleClick={handleClickAnecdotes} text='next anecdote' />
+        <Button handleClick={confirmVotesArray} text='print to console' />
+      </div>
+      <Anecdotes anecdote={anecdotes[state.highestVote]} heading='Anecdote With The Most Votes' />
     </div>
   );
 }
