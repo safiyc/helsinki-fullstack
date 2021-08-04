@@ -1,4 +1,7 @@
+# this git repo is used to git commit all Parts (exercises)
+
+# this notes.txt belongs to helsinkiexercises folder
 notes.txt
 
-# dont gitignore notes files in individual projects
+# dont git commit notes.txt files in individual parts or projects
 !/part1/unicafe/notes.txt
