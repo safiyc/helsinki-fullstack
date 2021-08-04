@@ -2,13 +2,7 @@ import React from 'react';
 
 import Header from './Header';
 import Course from './Course';
-
-// const Total = ({ course }) => {
-//   const sum = course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises
-//   return (
-//     <p>Number of exercises {sum}</p>
-//   )
-// }
+import Total from './Total';
 
 const App = () => {
   const course = {
@@ -37,6 +31,7 @@ const App = () => {
     <div>
       <Header course={course} />
       <Course course={course} />
+      <Total course={course} />
     </div>
   );
 }
