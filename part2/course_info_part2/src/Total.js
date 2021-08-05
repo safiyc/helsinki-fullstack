@@ -12,7 +12,7 @@ const Total = ({ course }) => {
   return (
     <>
       {/* <p>Number of exercises {sum}</p> */}
-      <p>Number of exercises reducer {exercisesTotal}</p>
+      <p><b>Number of exercises {exercisesTotal}</b></p>
     </>
   );
 };
