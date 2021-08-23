@@ -1,37 +1,8 @@
 import React, { useState } from 'react';
 
-const Contacts = (props) => {
-  if (props.filterMode === true) {
-    // new array of elements that includes any portion of filterValue string
-    const filtered = props.persons.filter(person =>
-      person.name.toLowerCase().includes(props.filterValue))
-
-    // if filtered returned an empty array
-    if (filtered.length === 0) {
-      return (
-        <>
-          <p>There are no matches for this filter.</p>
-        </>
-      )
-    }
-    // if filtered returned an array with elements, map the array to p tags
-    return (
-      <>
-        {filtered.map(person =>
-          <p key={person.name}>{person.name} {person.number}</p>
-        )}
-      </>
-    )
-  } else {
-    return (
-      <>
-        {props.persons.map(person =>
-          <p key={person.name}>{person.name} {person.number}</p>
-        )}
-      </>
-    )
-  }
-};
+import Contacts from './Contacts';
+import Form from './Form';
+import Filter from './Filter';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -99,31 +70,28 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <div>
-        filter by name: <input value={filterValue} onChange={handleFilterChange} />
-      </div>
+      <Filter
+        filterValue={filterValue}
+        handleChange={handleFilterChange}
+      />
       <h2>Add A New Contact</h2>
-      <form onSubmit={addContact}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number: <input type='number' value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type='submit'>add</button>
-        </div>
-      </form>
+      <Form
+        addContact={addContact}
+        newName={newName}
+        newNumber={newNumber}
+        handleName={handleNameChange}
+        handleNumber={handleNumberChange}
+      />
+
       {/* list of contacts */}
       <h2>Numbers</h2>
-      <Contacts filterMode={filterMode} filterValue={filterValue} persons={persons} />
-      {/* <div>
-        {persons.map(personObj =>
-          <p key={personObj.name}>{personObj.name} {personObj.number}</p>
-        )}
-      </div> */}
+      <Contacts
+        filterMode={filterMode}
+        filterValue={filterValue}
+        persons={persons}
+      />
     </div>
   );
-}
+};
 
 export default App;
