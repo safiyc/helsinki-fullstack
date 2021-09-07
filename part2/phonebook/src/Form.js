@@ -3,14 +3,16 @@ import React from 'react';
 const Form = (props) => {
   return (
     <form onSubmit={props.addContact}>
+      <label>
+        name:
+        <input value={props.newName} onChange={props.handleName} />
+      </label>
+      <label>
+        number:
+        <input type='number' value={props.newNumber} onChange={props.handleNumber} />
+      </label>
       <div>
-        name: <input value={props.newName} onChange={props.handleName} />
-      </div>
-      <div>
-        number: <input type='number' value={props.newNumber} onChange={props.handleNumber} />
-      </div>
-      <div>
-        <button type='submit'>add</button>
+        <button className='button' type='submit'>add</button>
       </div>
     </form>
   )

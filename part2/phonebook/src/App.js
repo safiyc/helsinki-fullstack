@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+import './styles/styles.css';
 
 import Contacts from './Contacts';
 import Form from './Form';
 import Filter from './Filter';
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    {
-      name: 'Arto Hellas',
-      number: '555-555-5555'
-    },
-    {
-      name: 'Ada Lovelace',
-      number: '39-44-5323523'
-    }
-  ]);
+  // const [persons, setPersons] = useState([
+  //   {
+  //     name: 'Arto Hellas',
+  //     number: '555-555-5555'
+  //   },
+  //   {
+  //     name: 'Ada Lovelace',
+  //     number: '39-44-5323523'
+  //   }
+  // ]);
+
+  const [persons, setPersons] = useState([]);
 
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
@@ -49,13 +54,13 @@ const App = () => {
     console.log('e: ', e.target.value);
 
     setNewName(e.target.value);
-  }
+  };
 
   const handleNumberChange = (e) => {
     console.log('e: ', e.target.value);
 
     setNewNumber(e.target.value);
-  }
+  };
 
   const handleFilterChange = (e) => {
     setFilterValue(e.target.value);
@@ -66,6 +71,17 @@ const App = () => {
       setFilterMode(false);
     }
   };
+
+  useEffect(() => {
+    console.log('...useEffect...');
+    // axios.get(...).then(...)
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled: ', response.data);
+        setPersons(response.data);
+      });
+  }, []);  // '[]' means render only after initial App component render
 
   return (
     <div>
