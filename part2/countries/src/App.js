@@ -1,27 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import FilterBar from './FilterBar';
+import List from './List';
 
 function App() {
-  const testCountries = [
-    {
-      name: 'China',
-      color: 'blue',
-      id: 1
-    },
-    {
-      name: 'India',
-      color: 'orange',
-      id: 2
-    }
-  ];
-
   const [countries, setCountries] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
-  const filteredCountries = testCountries.filter(country => country.name.toLowerCase().includes(searchValue));
-
-
-  const handleSearchValChange = (e) => {
+  const handleSearchChange = (e) => {
     console.log(e.target.value);
     setSearchValue(e.target.value);
   }
@@ -36,26 +22,11 @@ function App() {
       });
   }, []);
 
-  const countriesAPI = countries.filter(country => country.name.toLowerCase().includes(searchValue));
-
   return (
     <div>
-      <p>This is a test</p>
-      <input value={searchValue} onChange={handleSearchValChange} />
-      <p>Filtered List:</p>
-      {
-        filteredCountries.map(country =>
-          <p key={country.id}>{country.name}</p>
-        )
-      }
-
-      <p>Countries API filtered list:</p>
-      {
-        countriesAPI.map(country =>
-          <p key={country.name}>{country.name}</p>
-        )
-      }
-
+      <h1>Countries of the World</h1>
+      <FilterBar searchValue={searchValue} handleSearchChange={handleSearchChange} />
+      <List searchValue={searchValue} countries={countries} />
     </div>
   );
 }
