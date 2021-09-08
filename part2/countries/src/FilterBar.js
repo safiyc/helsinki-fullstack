@@ -1,7 +1,8 @@
 const FilterBar = (props) => {
   return (
     <>
-      <label>Find Countries</label>
+      <label>Find Country</label>
+      <br />
       <input value={props.searchValue} onChange={props.handleSearchChange} />
     </>
   );

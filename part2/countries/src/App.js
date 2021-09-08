@@ -12,6 +12,13 @@ function App() {
     setSearchValue(e.target.value);
   }
 
+  const handleShowClick = (e) => {
+    console.log('clicked "show"');
+    console.log('value: ', e.target.value.toLowerCase());
+
+    setSearchValue(e.target.value);  // lowercase to compare w/str of filteredCountries
+  };
+
   useEffect(() => {
     console.log('useEffect before fetch');
     axios
@@ -26,7 +33,7 @@ function App() {
     <div>
       <h1>Countries of the World</h1>
       <FilterBar searchValue={searchValue} handleSearchChange={handleSearchChange} />
-      <List searchValue={searchValue} countries={countries} />
+      <List searchValue={searchValue} countries={countries} handleShowClick={handleShowClick} />
     </div>
   );
 }
