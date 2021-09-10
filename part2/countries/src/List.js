@@ -30,8 +30,10 @@ const List = (props) => {
         </div>
       )
     } else if (filteredCountries.length === 1) {
+      const filteredCountry = filteredCountries[0];
+      // console.log('filteredCountry: ', filteredCountry);
       return (
-        <CountryFacts filteredCountries={filteredCountries} />
+        <CountryFacts filteredCountry={filteredCountry} />
       );
     }
   }
