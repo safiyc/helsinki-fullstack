@@ -18,7 +18,7 @@ const Contacts = (props) => {
     return (
       <>
         {filtered.map(person =>
-          <p key={person.name}>{person.name} {person.number}</p>
+          <p key={person.name}>{person.name} {person.number} <button onClick={() => props.deletePerson(person.id)}>delete</button></p>
         )}
       </>
     )
@@ -26,7 +26,7 @@ const Contacts = (props) => {
     return (
       <>
         {props.persons.map(person =>
-          <p key={person.name}>{person.name} {person.number}</p>
+          <p key={person.name}>{person.name} {person.number} <button onClick={() => props.deletePerson(person.id)}>delete</button></p>
         )}
       </>
     )

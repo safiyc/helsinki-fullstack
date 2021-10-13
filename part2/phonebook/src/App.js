@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 import './styles/styles.css';
 
 import Contacts from './Contacts';
 import Form from './Form';
 import Filter from './Filter';
+import * as contactService from './services/contacts';  // 'contactService' is name I'm giving here for the exported object from '../contacts.js'
+
+// sample for db.json
+// {
+//   "persons": [
+//     {
+//       "name": "SC",
+//       "number": "000-000-0000",
+//       "id": 1
+//     }
+//   ]
+// }
 
 const App = () => {
   // const [persons, setPersons] = useState([
@@ -42,13 +54,38 @@ const App = () => {
 
     if (duplicate === undefined) {
       // alert('this is not a duplicate');
-      setPersons(persons.concat(newPerson));  // concat returns a new array
-      setNewName('');
-      setNewNumber('');
+
+      // axios
+      // .post('http://localhost:3001/persons', newPerson)
+      contactService.addContact(newPerson).then(newContact => {
+        setPersons(persons.concat(newContact));  // concat returns a new array
+        setNewName('');
+        setNewNumber('');
+      });
     } else {
       alert(`${newPerson.name} is already added to the phonebook.`);
     }
   };
+
+  const deletePerson = (id) => {
+    const contact = persons.find(person => person.id === id);
+    console.log('to be deleted: ', contact, id);
+
+    // ask user to confirm after clicking on delete btn
+    const confirmDelete = window.confirm(`delete ${contact.name}?`);  // clicking 'okay' returns true
+
+    if (confirmDelete) {
+      // remove contact from db
+      contactService.deleteContact(contact.id).then(() => {
+        console.log(`${contact.name} is deleted`);
+
+        // remove contact from clientside state
+        const updatedList = persons.filter(person => person.id !== contact.id)
+        console.log('updatedList: ', updatedList);
+        setPersons(updatedList);
+      });
+    };
+  }
 
   const handleNameChange = (e) => {
     console.log('e: ', e.target.value);
@@ -75,12 +112,13 @@ const App = () => {
   useEffect(() => {
     console.log('...useEffect...');
     // axios.get(...).then(...)
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled: ', response.data);
-        setPersons(response.data);
-      });
+    // axios
+    //   .get('http://localhost:3001/persons')
+    //   .then(response => {
+    //     console.log('promise fulfilled: ', response.data);
+    //     setPersons(response.data);
+    //   });
+    contactService.getContacts().then(allContacts => setPersons(allContacts));
   }, []);  // '[]' means render only after initial App component render
 
   return (
@@ -105,6 +143,7 @@ const App = () => {
         filterMode={filterMode}
         filterValue={filterValue}
         persons={persons}
+        deletePerson={deletePerson}
       />
     </div>
   );
