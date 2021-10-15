@@ -24,4 +24,9 @@ const deleteContact = (id) => {
   return axios.delete(`http://localhost:3001/persons/${id}`);
 }
 
-export { getContacts, addContact, deleteContact };
+// update contact's phone number in db
+const updatePhone = (contact, updated) => {
+  return axios.put(`http://localhost:3001/persons/${contact.id}`, updated)
+}
+
+export { getContacts, addContact, deleteContact, updatePhone };

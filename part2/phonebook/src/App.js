@@ -42,9 +42,19 @@ const App = () => {
     e.preventDefault();
     // console.log('e: ', e.target);
 
+    // remove spaces from phone number
+    let formattedPhoneNumber = newNumber.replace(/\s/g, '');
+
+    // replace repeat dashes with single dash from phone number
+    formattedPhoneNumber = formattedPhoneNumber.replace(/(-)\1+/g, '-');
+
+    // remove dashes from beginning and end
+    formattedPhoneNumber = formattedPhoneNumber.replace(/(^-|-$)/g, '');
+
     const newPerson = {
       name: newName,
-      number: newNumber,
+      number: formattedPhoneNumber,
+      // currently with json-server, which auto creates id
       // id: newName
       // id: persons.length + 1  // not the best way to assign unique id
     };
@@ -63,18 +73,36 @@ const App = () => {
         setNewNumber('');
       });
     } else {
-      alert(`${newPerson.name} is already added to the phonebook.`);
+      // alert(`${newPerson.name} is already added to the phonebook.`);
+
+      // if person exists, but number is different, then ask to confirm if updating number
+      updateContactNumber(duplicate, newPerson);
     }
   };
+
+  const updateContactNumber = (contact, updated) => {
+    const confirmUpdate = window.confirm('update phone number?');
+
+    if (confirmUpdate) {
+      contactService.updatePhone(contact, updated)
+        .then(response => {
+          // console.log('number updated: ', updated);
+
+          // set contact to person from persons state if ids dont match, else
+          // set contact to updated contact from db (response.data)
+          setPersons(persons.map(person => person.id !== contact.id ? person : response.data))
+        })
+    }
+  }
 
   const deletePerson = (id) => {
     const contact = persons.find(person => person.id === id);
     console.log('to be deleted: ', contact, id);
 
     // ask user to confirm after clicking on delete btn
-    const confirmDelete = window.confirm(`delete ${contact.name}?`);  // clicking 'okay' returns true
+    const confirmDeleteContact = window.confirm(`delete ${contact.name}?`);  // clicking 'okay' returns true
 
-    if (confirmDelete) {
+    if (confirmDeleteContact) {
       // remove contact from db
       contactService.deleteContact(contact.id).then(() => {
         console.log(`${contact.name} is deleted`);
@@ -88,15 +116,24 @@ const App = () => {
   }
 
   const handleNameChange = (e) => {
-    console.log('e: ', e.target.value);
+    // console.log('e: ', e.target.value);
 
     setNewName(e.target.value);
   };
 
   const handleNumberChange = (e) => {
-    console.log('e: ', e.target.value);
+    // console.log('e: ', e.target.value);
 
-    setNewNumber(e.target.value);
+    // regex for numbers and dashes and whitespaces
+    const checkNumDashes = /^[0-9- +]+$/;
+
+    // set number field only if inpyting numbers and dashes
+    if (checkNumDashes.test(e.target.value)) {
+      setNewNumber(e.target.value);
+    } else {
+      console.log("Please only numbers and dashes");
+      alert('Please only numbers and dashes');
+    }
   };
 
   const handleFilterChange = (e) => {

@@ -5,11 +5,11 @@ const Form = (props) => {
     <form onSubmit={props.addContact}>
       <label>
         name:
-        <input value={props.newName} onChange={props.handleName} />
+        <input value={props.newName} onChange={props.handleName} required />
       </label>
       <label>
         number:
-        <input type='number' value={props.newNumber} onChange={props.handleNumber} />
+        <input value={props.newNumber} onChange={props.handleNumber} required />
       </label>
       <div>
         <button className='button' type='submit'>add</button>
